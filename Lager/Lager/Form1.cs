@@ -5,19 +5,23 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace Lager
 {
 	public partial class Lager : Form
 	{
+		public TextBox[] textBoxes;
 		public Lager()
 		{
 			InitializeComponent();
 			CreateMyListView();
 			ItemLabel.Text = "Item: ";
 			ErrorBox.Text = "";
+			textBoxes = new TextBox[] { NameBox, CountBox, PriceBox };
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -85,6 +89,11 @@ namespace Lager
 
 		private void RemoveButton_Click(object sender, EventArgs e)
 		{
+			Remove();
+		}
+
+		public void Remove()
+		{
 			int firstIndex = -1;
 
 			foreach (ListViewItem item in Varor.Items)
@@ -148,6 +157,11 @@ namespace Lager
 
 		private void ApplyButton_Click(object sender, EventArgs e)
 		{
+			Apply();
+		}
+
+		public void Apply()
+		{
 			var name = NameBox.Text;
 			var count = CountBox.Text;
 			var price = PriceBox.Text;
@@ -186,7 +200,8 @@ namespace Lager
 
 			if (Varor.SelectedItems.Count > 0)
 			{
-				Varor.Items[1].Name = name;
+				ItemLabel.Text = "Item: " + name;
+				Varor.Items[Varor.SelectedItems[0].Index].Name = name;
 				Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text = name;
 				Varor.Items[Varor.SelectedItems[0].Index].SubItems[1].Text = count;
 				Varor.Items[Varor.SelectedItems[0].Index].SubItems[2].Text = price;
@@ -221,6 +236,98 @@ namespace Lager
 			NameBox.Text = "";
 			CountBox.Text = "";
 			PriceBox.Text = "";
+			ErrorBox.Text = "";
+		}
+
+
+		private void Varor_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Right:
+				case Keys.Enter:
+					if (Varor.SelectedItems.Count > 0)
+					{
+						NameBox.Select();
+						e.SuppressKeyPress = true;
+					}
+					break;
+
+				case Keys.A:
+					if(e.Control)
+					{
+						foreach (ListViewItem item in Varor.Items)
+						{
+							item.Selected = true;
+						}
+					}
+					break;
+			}
+		}
+
+		private void Box_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Enter:
+					Apply();
+					e.SuppressKeyPress = true;
+					break;
+
+				case Keys.Left:
+				case Keys.Escape:
+					Varor.Select();
+					if(Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
+					e.SuppressKeyPress = true;
+					break;
+
+				case Keys.Up:
+				case Keys.Down:
+					for (int i = 0; i < textBoxes.Length; i++)
+					{
+						if(textBoxes[i].Focused)
+						{
+							if(e.KeyCode == Keys.Up)
+							{
+								if(i != 0) { textBoxes[i - 1].Focus(); }
+							}
+							else
+							{
+								if (i != 2) { textBoxes[i + 1].Focus(); }
+							}
+							break;
+						}
+					}
+					break;
+
+			}
+
+			e.Handled = true;
+		}
+
+		private void BrowseButton_Click(object sender, EventArgs e)
+		{
+			openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp)|*.jpg; *.jpeg; *.gif; *.png; *.bmp";  
+			if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
+			{
+				var item = Varor.SelectedItems[0];
+				Image image = Image.FromFile(openFileDialog1.FileName);
+				pictureBox1.Image = image;
+				Bitmap bmp = (Bitmap)image;
+				bmp.Save(item.Index.ToString()+".png", ImageFormat.Png);
+				bmp.Save("myfile.png", ImageFormat.Png);
+			}
+		}
+
+		private void ClearButton_Click(object sender, EventArgs e)
+		{
+			Bitmap Placeholder = Properties.Resources.Ping;
+			pictureBox1.Image = Placeholder;
+		}
+
+		private void SaveButton_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
