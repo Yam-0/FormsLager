@@ -45,8 +45,10 @@ namespace Lager
 				ListViewItem item = new ListViewItem("Item" + i, 0);
 				string price = random.Next(0, 100).ToString();
 				string count = random.Next(0, 1000).ToString();
+				string adress = "-";
 				item.SubItems.Add(count);
 				item.SubItems.Add(price);
+				item.SubItems.Add(adress);
 
 				Varor.Items.Add(item);
 			}
@@ -56,6 +58,7 @@ namespace Lager
 			Varor.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
 			Varor.Columns.Add("Count", -2, HorizontalAlignment.Left);
 			Varor.Columns.Add("Price", -2, HorizontalAlignment.Left);
+			Varor.Columns.Add("Image", -2, HorizontalAlignment.Left);
 		}
 
 		private void Varor_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,14 +67,29 @@ namespace Lager
 			{
 				var item = Varor.SelectedItems[0];
 
-				ItemLabel.Text = "Item: " + item.Text;
-
 				var name = Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text;
 				var count = Varor.Items[Varor.SelectedItems[0].Index].SubItems[1].Text;
 				var price = Varor.Items[Varor.SelectedItems[0].Index].SubItems[2].Text;
+				var adress1 = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+
+				ItemLabel.Text = "Item: " + item.Text;
 				NameBox.Text = name;
 				CountBox.Text = count;
 				PriceBox.Text = price;
+
+				string adress = "./ImageList/img" + item.Index.ToString() + ".png";
+				Bitmap bitmap;
+
+				if (File.Exists(adress))
+				{
+					bitmap = new Bitmap(adress);
+				}
+				else
+				{
+					bitmap = Properties.Resources.Ping;
+				}
+
+				pictureBox1.Image = bitmap;
 
 				item.Checked = true;
 			}
@@ -81,6 +99,7 @@ namespace Lager
 				NameBox.Text = "";
 				CountBox.Text = "";
 				PriceBox.Text = "";
+				pictureBox1.Image = Properties.Resources.Ping;
 			}
 
 			ErrorBox.Text = "";
@@ -103,6 +122,18 @@ namespace Lager
 					if (firstIndex == -1)
 					{
 						firstIndex = item.Index;
+					}
+
+					var adress1 = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+					ErrorBox.Text = adress1;
+					string adress = "./ImageList/img" + item.Index.ToString() + ".png";
+					if (File.Exists(adress))
+					{
+						Bitmap Placeholder = Properties.Resources.Ping;
+						pictureBox1.Image = Placeholder;
+						GC.Collect();
+						GC.WaitForPendingFinalizers();
+						File.Delete(adress);
 					}
 
 					Varor.Items.Remove(item);
@@ -231,14 +262,47 @@ namespace Lager
 			Application.Exit();
 		}
 
-		private void ClearButtom_Click(object sender, EventArgs e)
+		private void ClearButton1_Click(object sender, EventArgs e)
 		{
 			NameBox.Text = "";
 			CountBox.Text = "";
 			PriceBox.Text = "";
-			ErrorBox.Text = "";
 		}
 
+		private void ClearButton2_Click(object sender, EventArgs e)
+		{
+			var item = Varor.SelectedItems[0];
+
+			pictureBox1.Image = Properties.Resources.Ping;
+			string adress = "./ImageList/img" + item.Index.ToString() + ".png";
+			if (File.Exists(adress))
+			{
+				Bitmap Placeholder = Properties.Resources.Ping;
+				pictureBox1.Image = Placeholder;
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+				File.Delete(adress);
+			}
+		}
+
+		private void BrowseButton_Click(object sender, EventArgs e)
+		{
+			openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.png; *.bmp)|*.jpg; *.jpeg; *.png; *.bmp";
+			if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
+			{
+				var item = Varor.SelectedItems[0];
+				Image image = Image.FromFile(openFileDialog1.FileName);
+				pictureBox1.Image = image;
+				Bitmap bmp = (Bitmap)image;
+				System.IO.Directory.CreateDirectory("./ImageList");
+				bmp.Save("./ImageList/img" + item.Index.ToString() + ".png", ImageFormat.Png);
+			}
+		}
+
+		private void SaveButton_Click(object sender, EventArgs e)
+		{
+
+		}
 
 		private void Varor_KeyDown(object sender, KeyEventArgs e)
 		{
@@ -261,6 +325,11 @@ namespace Lager
 							item.Selected = true;
 						}
 					}
+					break;
+
+				case Keys.Back:
+				case Keys.Delete:
+					Remove();
 					break;
 			}
 		}
@@ -303,31 +372,6 @@ namespace Lager
 			}
 
 			e.Handled = true;
-		}
-
-		private void BrowseButton_Click(object sender, EventArgs e)
-		{
-			openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.png; *.bmp)|*.jpg; *.jpeg; *.gif; *.png; *.bmp";  
-			if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
-			{
-				var item = Varor.SelectedItems[0];
-				Image image = Image.FromFile(openFileDialog1.FileName);
-				pictureBox1.Image = image;
-				Bitmap bmp = (Bitmap)image;
-				bmp.Save(item.Index.ToString()+".png", ImageFormat.Png);
-				bmp.Save("myfile.png", ImageFormat.Png);
-			}
-		}
-
-		private void ClearButton_Click(object sender, EventArgs e)
-		{
-			Bitmap Placeholder = Properties.Resources.Ping;
-			pictureBox1.Image = Placeholder;
-		}
-
-		private void SaveButton_Click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

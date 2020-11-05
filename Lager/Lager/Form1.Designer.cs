@@ -37,18 +37,18 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.ErrorBox = new System.Windows.Forms.RichTextBox();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.ClearButtom = new System.Windows.Forms.Button();
+			this.ApplyButton = new System.Windows.Forms.Button();
+			this.ClearButtom1 = new System.Windows.Forms.Button();
 			this.PriceLabel = new System.Windows.Forms.Label();
 			this.CountLabel = new System.Windows.Forms.Label();
 			this.NameLabel = new System.Windows.Forms.Label();
 			this.CountBox = new System.Windows.Forms.TextBox();
 			this.PriceBox = new System.Windows.Forms.TextBox();
-			this.ClearButton = new System.Windows.Forms.Button();
+			this.ClearButton2 = new System.Windows.Forms.Button();
 			this.BrowseButton = new System.Windows.Forms.Button();
 			this.SaveButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.ApplyButton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel2.SuspendLayout();
@@ -122,7 +122,7 @@
 			this.panel1.Controls.Add(this.pictureBox1);
 			this.panel1.Controls.Add(this.ErrorBox);
 			this.panel1.Controls.Add(this.panel2);
-			this.panel1.Controls.Add(this.ClearButton);
+			this.panel1.Controls.Add(this.ClearButton2);
 			this.panel1.Controls.Add(this.BrowseButton);
 			this.panel1.Location = new System.Drawing.Point(245, 59);
 			this.panel1.Margin = new System.Windows.Forms.Padding(2);
@@ -140,6 +140,7 @@
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox1.TabIndex = 10;
 			this.pictureBox1.TabStop = false;
+			this.pictureBox1.Click += new System.EventHandler(this.ClearButton2_Click);
 			// 
 			// ErrorBox
 			// 
@@ -161,7 +162,7 @@
 			this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panel2.Controls.Add(this.NameBox);
 			this.panel2.Controls.Add(this.ApplyButton);
-			this.panel2.Controls.Add(this.ClearButtom);
+			this.panel2.Controls.Add(this.ClearButtom1);
 			this.panel2.Controls.Add(this.PriceLabel);
 			this.panel2.Controls.Add(this.CountLabel);
 			this.panel2.Controls.Add(this.NameLabel);
@@ -173,16 +174,27 @@
 			this.panel2.Size = new System.Drawing.Size(263, 134);
 			this.panel2.TabIndex = 7;
 			// 
-			// ClearButtom
+			// ApplyButton
 			// 
-			this.ClearButtom.Location = new System.Drawing.Point(2, 101);
-			this.ClearButtom.Margin = new System.Windows.Forms.Padding(2);
-			this.ClearButtom.Name = "ClearButtom";
-			this.ClearButtom.Size = new System.Drawing.Size(56, 27);
-			this.ClearButtom.TabIndex = 6;
-			this.ClearButtom.Text = "Clear";
-			this.ClearButtom.UseVisualStyleBackColor = true;
-			this.ClearButtom.Click += new System.EventHandler(this.ClearButtom_Click);
+			this.ApplyButton.Location = new System.Drawing.Point(201, 101);
+			this.ApplyButton.Margin = new System.Windows.Forms.Padding(2);
+			this.ApplyButton.Name = "ApplyButton";
+			this.ApplyButton.Size = new System.Drawing.Size(56, 27);
+			this.ApplyButton.TabIndex = 7;
+			this.ApplyButton.Text = "Apply";
+			this.ApplyButton.UseVisualStyleBackColor = true;
+			this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
+			// 
+			// ClearButtom1
+			// 
+			this.ClearButtom1.Location = new System.Drawing.Point(2, 101);
+			this.ClearButtom1.Margin = new System.Windows.Forms.Padding(2);
+			this.ClearButtom1.Name = "ClearButtom1";
+			this.ClearButtom1.Size = new System.Drawing.Size(56, 27);
+			this.ClearButtom1.TabIndex = 6;
+			this.ClearButtom1.Text = "Clear";
+			this.ClearButtom1.UseVisualStyleBackColor = true;
+			this.ClearButtom1.Click += new System.EventHandler(this.ClearButton1_Click);
 			// 
 			// PriceLabel
 			// 
@@ -237,16 +249,16 @@
 			this.PriceBox.TabIndex = 5;
 			this.PriceBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Box_KeyDown);
 			// 
-			// ClearButton
+			// ClearButton2
 			// 
-			this.ClearButton.Location = new System.Drawing.Point(270, 142);
-			this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
-			this.ClearButton.Name = "ClearButton";
-			this.ClearButton.Size = new System.Drawing.Size(56, 27);
-			this.ClearButton.TabIndex = 9;
-			this.ClearButton.Text = "Clear";
-			this.ClearButton.UseVisualStyleBackColor = true;
-			this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+			this.ClearButton2.Location = new System.Drawing.Point(270, 142);
+			this.ClearButton2.Margin = new System.Windows.Forms.Padding(2);
+			this.ClearButton2.Name = "ClearButton2";
+			this.ClearButton2.Size = new System.Drawing.Size(56, 27);
+			this.ClearButton2.TabIndex = 9;
+			this.ClearButton2.Text = "Clear";
+			this.ClearButton2.UseVisualStyleBackColor = true;
+			this.ClearButton2.Click += new System.EventHandler(this.ClearButton2_Click);
 			// 
 			// BrowseButton
 			// 
@@ -284,17 +296,6 @@
 			// openFileDialog1
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
-			// 
-			// ApplyButton
-			// 
-			this.ApplyButton.Location = new System.Drawing.Point(201, 101);
-			this.ApplyButton.Margin = new System.Windows.Forms.Padding(2);
-			this.ApplyButton.Name = "ApplyButton";
-			this.ApplyButton.Size = new System.Drawing.Size(56, 27);
-			this.ApplyButton.TabIndex = 7;
-			this.ApplyButton.Text = "Apply";
-			this.ApplyButton.UseVisualStyleBackColor = true;
-			this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
 			// 
 			// Lager
 			// 
@@ -342,9 +343,9 @@
         private System.Windows.Forms.TextBox PriceBox;
         private System.Windows.Forms.Button BrowseButton;
 		private System.Windows.Forms.RichTextBox ErrorBox;
-		private System.Windows.Forms.Button ClearButtom;
+		private System.Windows.Forms.Button ClearButtom1;
 		private System.Windows.Forms.PictureBox pictureBox1;
-		private System.Windows.Forms.Button ClearButton;
+		private System.Windows.Forms.Button ClearButton2;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Button ApplyButton;
 	}
