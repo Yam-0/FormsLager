@@ -164,8 +164,10 @@ namespace Lager
 			ListViewItem item = new ListViewItem("Item" + Varor.Items.Count, 0);
 			string price = random.Next(0, 100).ToString();
 			string count = random.Next(0, 1000).ToString();
+			string adress = "-";
 			item.SubItems.Add(count);
 			item.SubItems.Add(price);
+			item.SubItems.Add(adress);
 			Varor.Items.Add(item);
 
 			foreach (ListViewItem selectedItem in Varor.SelectedItems)
@@ -268,33 +270,61 @@ namespace Lager
 
 		private void ClearButton2_Click(object sender, EventArgs e)
 		{
-			var item = Varor.SelectedItems[0];
-
-			pictureBox1.Image = Properties.Resources.Ping;
-			string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
-			if (File.Exists(adress))
+			if(Varor.SelectedItems.Count > 0)
 			{
-				Bitmap Placeholder = Properties.Resources.Ping;
-				pictureBox1.Image = Placeholder;
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
-				File.Delete(adress);
+				var item = Varor.SelectedItems[0];
+
+				pictureBox1.Image = Properties.Resources.Ping;
+				string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+				if (File.Exists(adress))
+				{
+					Bitmap Placeholder = Properties.Resources.Ping;
+					pictureBox1.Image = Placeholder;
+					GC.Collect();
+					GC.WaitForPendingFinalizers();
+					File.Delete(adress);
+				}
 			}
 		}
 
 		private void BrowseButton_Click(object sender, EventArgs e)
 		{
-			openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.png; *.bmp)|*.jpg; *.jpeg; *.png; *.bmp";
-			if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
+			if (Varor.SelectedItems.Count > 0)
 			{
-				var item = Varor.SelectedItems[0];
-				Image image = Image.FromFile(openFileDialog1.FileName);
-				pictureBox1.Image = image;
-				Bitmap bmp = (Bitmap)image;
-				Directory.CreateDirectory("./ImageList");
-				string newAdress = "./ImageList/img" + item.Index.ToString() + ".png";
-				bmp.Save(newAdress, ImageFormat.Png);
-				Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
+				openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.png; *.bmp)|*.jpg; *.jpeg; *.png; *.bmp";
+				if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
+				{
+					var item = Varor.SelectedItems[0];
+					Image image = Image.FromFile(openFileDialog1.FileName);
+					pictureBox1.Image = image;
+					Bitmap bmp = (Bitmap)image;
+					Directory.CreateDirectory("./ImageList");
+					string newAdress = "./ImageList/img" + item.Index.ToString() + ".png";
+					bmp.Save(newAdress, ImageFormat.Png);
+					Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
+				}
+			}
+		}
+
+		private void FindButton_Click(object sender, EventArgs e)
+		{
+			if (Varor.SelectedItems.Count > 0)
+			{
+				string adress = System.IO.Directory.GetCurrentDirectory() + @"\" + "ImageList";
+				openFileDialog1.InitialDirectory = adress;
+				openFileDialog1.Filter = "*.png;)|*.png;";
+				openFileDialog1.RestoreDirectory = true;
+
+				if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
+				{
+					var item = Varor.SelectedItems[0];
+					Image image = Image.FromFile(openFileDialog1.FileName);
+					pictureBox1.Image = image;
+					Bitmap bmp = (Bitmap)image;
+					string newAdress = openFileDialog1.FileName;
+					ErrorBox.Text = newAdress;
+					Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
+				}
 			}
 		}
 

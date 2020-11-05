@@ -49,6 +49,7 @@
 			this.SaveButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.FindButton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel2.SuspendLayout();
@@ -123,6 +124,7 @@
 			this.panel1.Controls.Add(this.ErrorBox);
 			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Controls.Add(this.ClearButton2);
+			this.panel1.Controls.Add(this.FindButton);
 			this.panel1.Controls.Add(this.BrowseButton);
 			this.panel1.Location = new System.Drawing.Point(245, 59);
 			this.panel1.Margin = new System.Windows.Forms.Padding(2);
@@ -295,7 +297,18 @@
 			// 
 			// openFileDialog1
 			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.FileName = "Item Image";
+			// 
+			// FindButton
+			// 
+			this.FindButton.Location = new System.Drawing.Point(351, 173);
+			this.FindButton.Margin = new System.Windows.Forms.Padding(2);
+			this.FindButton.Name = "FindButton";
+			this.FindButton.Size = new System.Drawing.Size(56, 27);
+			this.FindButton.TabIndex = 10;
+			this.FindButton.Text = "Find";
+			this.FindButton.UseVisualStyleBackColor = true;
+			this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
 			// 
 			// Lager
 			// 
@@ -348,6 +361,7 @@
 		private System.Windows.Forms.Button ClearButton2;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Button ApplyButton;
+		private System.Windows.Forms.Button FindButton;
 	}
 }
 
