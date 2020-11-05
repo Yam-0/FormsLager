@@ -70,14 +70,13 @@ namespace Lager
 				var name = Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text;
 				var count = Varor.Items[Varor.SelectedItems[0].Index].SubItems[1].Text;
 				var price = Varor.Items[Varor.SelectedItems[0].Index].SubItems[2].Text;
-				var adress1 = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+				var adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
 
 				ItemLabel.Text = "Item: " + item.Text;
 				NameBox.Text = name;
 				CountBox.Text = count;
 				PriceBox.Text = price;
 
-				string adress = "./ImageList/img" + item.Index.ToString() + ".png";
 				Bitmap bitmap;
 
 				if (File.Exists(adress))
@@ -123,10 +122,8 @@ namespace Lager
 					{
 						firstIndex = item.Index;
 					}
-
-					var adress1 = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
-					ErrorBox.Text = adress1;
-					string adress = "./ImageList/img" + item.Index.ToString() + ".png";
+					
+					string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
 					if (File.Exists(adress))
 					{
 						Bitmap Placeholder = Properties.Resources.Ping;
@@ -274,7 +271,7 @@ namespace Lager
 			var item = Varor.SelectedItems[0];
 
 			pictureBox1.Image = Properties.Resources.Ping;
-			string adress = "./ImageList/img" + item.Index.ToString() + ".png";
+			string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
 			if (File.Exists(adress))
 			{
 				Bitmap Placeholder = Properties.Resources.Ping;
@@ -294,8 +291,10 @@ namespace Lager
 				Image image = Image.FromFile(openFileDialog1.FileName);
 				pictureBox1.Image = image;
 				Bitmap bmp = (Bitmap)image;
-				System.IO.Directory.CreateDirectory("./ImageList");
-				bmp.Save("./ImageList/img" + item.Index.ToString() + ".png", ImageFormat.Png);
+				Directory.CreateDirectory("./ImageList");
+				string newAdress = "./ImageList/img" + item.Index.ToString() + ".png";
+				bmp.Save(newAdress, ImageFormat.Png);
+				Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
 			}
 		}
 
