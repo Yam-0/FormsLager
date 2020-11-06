@@ -49,6 +49,7 @@
 			this.SaveButton = new System.Windows.Forms.Button();
 			this.CloseButton = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.ReloadButton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -62,7 +63,7 @@
 			this.Varor.FullRowSelect = true;
 			this.Varor.HideSelection = false;
 			this.Varor.Location = new System.Drawing.Point(11, 11);
-			this.Varor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Varor.Margin = new System.Windows.Forms.Padding(2);
 			this.Varor.Name = "Varor";
 			this.Varor.Size = new System.Drawing.Size(222, 400);
 			this.Varor.Sorting = System.Windows.Forms.SortOrder.Ascending;
@@ -75,7 +76,7 @@
 			// AddButton
 			// 
 			this.AddButton.Location = new System.Drawing.Point(9, 418);
-			this.AddButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.AddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.AddButton.Name = "AddButton";
 			this.AddButton.Size = new System.Drawing.Size(56, 27);
 			this.AddButton.TabIndex = 2;
@@ -85,8 +86,8 @@
 			// 
 			// RemoveButton
 			// 
-			this.RemoveButton.Location = new System.Drawing.Point(177, 418);
-			this.RemoveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.RemoveButton.Location = new System.Drawing.Point(69, 418);
+			this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.RemoveButton.Name = "RemoveButton";
 			this.RemoveButton.Size = new System.Drawing.Size(56, 27);
 			this.RemoveButton.TabIndex = 3;
@@ -109,7 +110,7 @@
 			// 
 			this.NameBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NameBox.Location = new System.Drawing.Point(72, 2);
-			this.NameBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.NameBox.Margin = new System.Windows.Forms.Padding(2);
 			this.NameBox.Name = "NameBox";
 			this.NameBox.Size = new System.Drawing.Size(144, 28);
 			this.NameBox.TabIndex = 5;
@@ -123,7 +124,7 @@
 			this.panel1.Controls.Add(this.ErrorBox);
 			this.panel1.Controls.Add(this.panel2);
 			this.panel1.Location = new System.Drawing.Point(241, 60);
-			this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.panel1.Margin = new System.Windows.Forms.Padding(2);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(227, 350);
 			this.panel1.TabIndex = 6;
@@ -158,7 +159,7 @@
 			this.panel2.Controls.Add(this.CountBox);
 			this.panel2.Controls.Add(this.PriceBox);
 			this.panel2.Location = new System.Drawing.Point(2, 2);
-			this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.panel2.Margin = new System.Windows.Forms.Padding(2);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(221, 232);
 			this.panel2.TabIndex = 7;
@@ -178,7 +179,7 @@
 			// ClearButton
 			// 
 			this.ClearButton.Location = new System.Drawing.Point(126, 198);
-			this.ClearButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ClearButton.Name = "ClearButton";
 			this.ClearButton.Size = new System.Drawing.Size(89, 27);
 			this.ClearButton.TabIndex = 9;
@@ -190,7 +191,7 @@
 			// ApplyButton
 			// 
 			this.ApplyButton.Location = new System.Drawing.Point(126, 107);
-			this.ApplyButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.ApplyButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ApplyButton.Name = "ApplyButton";
 			this.ApplyButton.Size = new System.Drawing.Size(89, 27);
 			this.ApplyButton.TabIndex = 6;
@@ -202,7 +203,7 @@
 			// FindButton
 			// 
 			this.FindButton.Location = new System.Drawing.Point(126, 167);
-			this.FindButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.FindButton.Margin = new System.Windows.Forms.Padding(2);
 			this.FindButton.Name = "FindButton";
 			this.FindButton.Size = new System.Drawing.Size(89, 27);
 			this.FindButton.TabIndex = 8;
@@ -225,7 +226,7 @@
 			// BrowseButton
 			// 
 			this.BrowseButton.Location = new System.Drawing.Point(126, 137);
-			this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.BrowseButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BrowseButton.Name = "BrowseButton";
 			this.BrowseButton.Size = new System.Drawing.Size(89, 27);
 			this.BrowseButton.TabIndex = 7;
@@ -260,7 +261,7 @@
 			// 
 			this.CountBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.CountBox.Location = new System.Drawing.Point(72, 34);
-			this.CountBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.CountBox.Margin = new System.Windows.Forms.Padding(2);
 			this.CountBox.Name = "CountBox";
 			this.CountBox.Size = new System.Drawing.Size(144, 28);
 			this.CountBox.TabIndex = 5;
@@ -271,7 +272,7 @@
 			// 
 			this.PriceBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.PriceBox.Location = new System.Drawing.Point(72, 66);
-			this.PriceBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.PriceBox.Margin = new System.Windows.Forms.Padding(2);
 			this.PriceBox.Name = "PriceBox";
 			this.PriceBox.Size = new System.Drawing.Size(144, 28);
 			this.PriceBox.TabIndex = 5;
@@ -281,7 +282,7 @@
 			// SaveButton
 			// 
 			this.SaveButton.Location = new System.Drawing.Point(411, 418);
-			this.SaveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.SaveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.SaveButton.Name = "SaveButton";
 			this.SaveButton.Size = new System.Drawing.Size(56, 27);
 			this.SaveButton.TabIndex = 12;
@@ -292,7 +293,7 @@
 			// CloseButton
 			// 
 			this.CloseButton.Location = new System.Drawing.Point(350, 418);
-			this.CloseButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.CloseButton.Margin = new System.Windows.Forms.Padding(2);
 			this.CloseButton.Name = "CloseButton";
 			this.CloseButton.Size = new System.Drawing.Size(56, 27);
 			this.CloseButton.TabIndex = 11;
@@ -304,6 +305,17 @@
 			// 
 			this.openFileDialog1.FileName = "Item Image";
 			// 
+			// ReloadButton
+			// 
+			this.ReloadButton.Location = new System.Drawing.Point(177, 418);
+			this.ReloadButton.Margin = new System.Windows.Forms.Padding(2);
+			this.ReloadButton.Name = "ReloadButton";
+			this.ReloadButton.Size = new System.Drawing.Size(56, 27);
+			this.ReloadButton.TabIndex = 4;
+			this.ReloadButton.Text = "Reload";
+			this.ReloadButton.UseVisualStyleBackColor = true;
+			this.ReloadButton.Click += new System.EventHandler(this.ReloadButton_Click);
+			// 
 			// Lager
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,13 +323,14 @@
 			this.ClientSize = new System.Drawing.Size(476, 456);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.ItemLabel);
+			this.Controls.Add(this.ReloadButton);
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.SaveButton);
 			this.Controls.Add(this.RemoveButton);
 			this.Controls.Add(this.AddButton);
 			this.Controls.Add(this.Varor);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.MaximumSize = new System.Drawing.Size(492, 495);
 			this.MinimumSize = new System.Drawing.Size(492, 495);
 			this.Name = "Lager";
@@ -355,6 +368,7 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Button ApplyButton;
 		private System.Windows.Forms.Button FindButton;
+		private System.Windows.Forms.Button ReloadButton;
 	}
 }
 

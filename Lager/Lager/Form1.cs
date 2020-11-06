@@ -31,7 +31,6 @@ namespace Lager
 			string STAGING_USER_PASSWORD = "ntiuser"; //Safety tips
 			string atlasString = "mongodb+srv://staging-user:" + STAGING_USER_PASSWORD + "@varor.igatz.mongodb.net/test";
 			MongoClient databaseClient = new MongoClient(atlasString);
-
 			var databases = databaseClient.ListDatabases().ToList();
 			Console.WriteLine("Databases: ");
 			foreach (var database in databases)
@@ -148,6 +147,7 @@ namespace Lager
 					}
 
 					string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+					/*
 					if (File.Exists(adress))
 					{
 						Bitmap Placeholder = Properties.Resources.Ping;
@@ -156,6 +156,7 @@ namespace Lager
 						GC.WaitForPendingFinalizers();
 						File.Delete(adress);
 					}
+					*/
 
 					Varor.Items.Remove(item);
 				}
@@ -496,6 +497,32 @@ namespace Lager
 			}
 
 			dbVaror.InsertMany(varor);
+		}
+
+		private void ReloadButton_Click(object sender, EventArgs e)
+		{
+			foreach (ListViewItem item in Varor.Items)
+			{
+				Varor.Items.Remove(item);
+			}
+
+
+			var dbVaror = database.GetCollection<BsonDocument>("Varor");
+			var documents = dbVaror.Find(new BsonDocument()).ToList();
+			foreach (BsonDocument vara in documents)
+			{
+				string name = vara.GetValue(1).ToString();
+				string price = vara.GetValue(2).ToString();
+				string count = vara.GetValue(3).ToString();
+				string adress = vara.GetValue(4).ToString();
+
+				ListViewItem item = new ListViewItem(name, 0);
+				item.SubItems.Add(count);
+				item.SubItems.Add(price);
+				item.SubItems.Add(adress);
+
+				Varor.Items.Add(item);
+			}
 		}
 	}
 }
