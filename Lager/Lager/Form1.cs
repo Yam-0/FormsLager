@@ -10,11 +10,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 
+using MongoDB.Driver;
+using MongoDB.Bson;
+
 namespace Lager
 {
 	public partial class Lager : Form
 	{
+
+		public IMongoDatabase database;
 		public TextBox[] textBoxes;
+
 		public Lager()
 		{
 			InitializeComponent();
@@ -22,6 +28,19 @@ namespace Lager
 			ItemLabel.Text = "Item: ";
 			ErrorBox.Text = "";
 			textBoxes = new TextBox[] { NameBox, CountBox, PriceBox };
+
+			string STAGING_USER_PASSWORD = "ntiuser"; //Safety tips
+			string atlasString = "mongodb+srv://staging-user:" + STAGING_USER_PASSWORD + "@varor.igatz.mongodb.net/test";
+			MongoClient databaseClient = new MongoClient(atlasString);
+
+			var databases = databaseClient.ListDatabases().ToList();
+			Console.WriteLine("Databases: ");
+			foreach (var database in databases)
+			{
+				Console.WriteLine(database);
+			}
+
+			database = databaseClient.GetDatabase("Varor-Database");
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -31,15 +50,16 @@ namespace Lager
 
 		public void CreateMyListView()
 		{
+			Varor.Scrollable = true;
+			Varor.MultiSelect = true;
+			Varor.View = View.Details;
+
+			/*
 			int itemCount = 10;
 
 			ListViewItem[] items = new ListViewItem[itemCount];
 
-			Varor.Scrollable = true;
-			Varor.MultiSelect = true;
-			Varor.View = View.Details;
 			Random random = new Random();
-
 			for (int i = 0; i < items.Length; i++)
 			{
 				ListViewItem item = new ListViewItem("Item" + i, 0);
@@ -52,6 +72,7 @@ namespace Lager
 
 				Varor.Items.Add(item);
 			}
+			*/
 
 			Varor.Sorting = SortOrder.Ascending;
 
@@ -122,7 +143,7 @@ namespace Lager
 					{
 						firstIndex = item.Index;
 					}
-					
+
 					string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
 					if (File.Exists(adress))
 					{
@@ -263,14 +284,14 @@ namespace Lager
 
 		private void ClearButton_Click(object sender, EventArgs e)
 		{
-            NameBox.Text = "";
-            CountBox.Text = "";
-            PriceBox.Text = "";
-            ErrorBox.Text = "";
-            Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = "-";
-            Bitmap Placeholder = Properties.Resources.Ping;
+			NameBox.Text = "";
+			CountBox.Text = "";
+			PriceBox.Text = "";
+			ErrorBox.Text = "";
+			Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = "-";
+			Bitmap Placeholder = Properties.Resources.Ping;
 
-            if (Varor.SelectedItems.Count > 0)
+			if (Varor.SelectedItems.Count > 0)
 			{
 				var item = Varor.SelectedItems[0];
 
@@ -345,7 +366,7 @@ namespace Lager
 					break;
 
 				case Keys.A:
-					if(e.Control)
+					if (e.Control)
 					{
 						foreach (ListViewItem item in Varor.Items)
 						{
@@ -372,7 +393,7 @@ namespace Lager
 
 				case Keys.Escape:
 					Varor.Select();
-					if(Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
+					if (Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
 					e.SuppressKeyPress = true;
 					break;
 
@@ -380,29 +401,29 @@ namespace Lager
 				case Keys.Down:
 					for (int i = 0; i < textBoxes.Length; i++)
 					{
-						if(textBoxes[i].Focused)
+						if (textBoxes[i].Focused)
 						{
-							if(e.KeyCode == Keys.Up)
+							if (e.KeyCode == Keys.Up)
 							{
-								if(i != 0)
-                                {
-                                    textBoxes[i - 1].Focus();
-                                }
-                                else
-                                {
-                                    ClearButton.Focus();
-                                }
+								if (i != 0)
+								{
+									textBoxes[i - 1].Focus();
+								}
+								else
+								{
+									ClearButton.Focus();
+								}
 							}
 							else
 							{
-                                if (i != 2)
-                                {
-                                    textBoxes[i + 1].Focus();
-                                }
-                                else
-                                {
-                                    ApplyButton.Focus();
-                                }
+								if (i != 2)
+								{
+									textBoxes[i + 1].Focus();
+								}
+								else
+								{
+									ApplyButton.Focus();
+								}
 							}
 							break;
 						}
@@ -411,35 +432,35 @@ namespace Lager
 			}
 		}
 
-        private void Button_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Escape:
-                    Varor.Select();
-                    if (Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
-                    e.SuppressKeyPress = true;
-                    break;
-            }
+		private void Button_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+					Varor.Select();
+					if (Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
+					e.SuppressKeyPress = true;
+					break;
+			}
 
-            e.Handled = true;
-        }
+			e.Handled = true;
+		}
 
-        private void Box_Enter(object sender, EventArgs e)
-        {
-            if(NameBox.Focused)
-            {
-                NameBox.SelectAll();
-            }
-            if (CountBox.Focused)
-            {
-                CountBox.SelectAll();
-            }
-            if (PriceBox.Focused)
-            {
-                PriceBox.SelectAll();
-            }
-        }
-    }
+		private void Box_Enter(object sender, EventArgs e)
+		{
+			if (NameBox.Focused)
+			{
+				NameBox.SelectAll();
+			}
+			if (CountBox.Focused)
+			{
+				CountBox.SelectAll();
+			}
+			if (PriceBox.Focused)
+			{
+				PriceBox.SelectAll();
+			}
+		}
+	}
 }
 
