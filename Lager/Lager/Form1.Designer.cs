@@ -118,6 +118,7 @@
             // panel1
             // 
             this.panel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.ErrorBox);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(321, 74);
@@ -138,7 +139,7 @@
             this.ErrorBox.Margin = new System.Windows.Forms.Padding(4);
             this.ErrorBox.Name = "ErrorBox";
             this.ErrorBox.ReadOnly = true;
-            this.ErrorBox.Size = new System.Drawing.Size(293, 133);
+            this.ErrorBox.Size = new System.Drawing.Size(293, 131);
             this.ErrorBox.TabIndex = 8;
             this.ErrorBox.Text = "";
             // 
