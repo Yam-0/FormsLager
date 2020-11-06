@@ -283,7 +283,11 @@ namespace Lager
 
 		private void CloseButton_Click(object sender, EventArgs e)
 		{
-			Application.Exit();
+			var confirmResult = MessageBox.Show("Are you sure you wan't to quit without saving?", "Quit without saving", MessageBoxButtons.YesNo);
+			if (confirmResult == DialogResult.Yes)
+			{
+				Application.Exit();
+			}
 		}
 
 		private void ClearButton_Click(object sender, EventArgs e)
@@ -501,27 +505,30 @@ namespace Lager
 
 		private void ReloadButton_Click(object sender, EventArgs e)
 		{
-			foreach (ListViewItem item in Varor.Items)
+			var confirmResult = MessageBox.Show("Are you sure you wan't to discard all changes and reload from database?", "Discard Changes", MessageBoxButtons.YesNo);
+			if (confirmResult == DialogResult.Yes)
 			{
-				Varor.Items.Remove(item);
-			}
+				foreach (ListViewItem item in Varor.Items)
+				{
+					Varor.Items.Remove(item);
+				}
 
+				var dbVaror = database.GetCollection<BsonDocument>("Varor");
+				var documents = dbVaror.Find(new BsonDocument()).ToList();
+				foreach (BsonDocument vara in documents)
+				{
+					string name = vara.GetValue(1).ToString();
+					string price = vara.GetValue(2).ToString();
+					string count = vara.GetValue(3).ToString();
+					string adress = vara.GetValue(4).ToString();
 
-			var dbVaror = database.GetCollection<BsonDocument>("Varor");
-			var documents = dbVaror.Find(new BsonDocument()).ToList();
-			foreach (BsonDocument vara in documents)
-			{
-				string name = vara.GetValue(1).ToString();
-				string price = vara.GetValue(2).ToString();
-				string count = vara.GetValue(3).ToString();
-				string adress = vara.GetValue(4).ToString();
+					ListViewItem item = new ListViewItem(name, 0);
+					item.SubItems.Add(count);
+					item.SubItems.Add(price);
+					item.SubItems.Add(adress);
 
-				ListViewItem item = new ListViewItem(name, 0);
-				item.SubItems.Add(count);
-				item.SubItems.Add(price);
-				item.SubItems.Add(adress);
-
-				Varor.Items.Add(item);
+					Varor.Items.Add(item);
+				}
 			}
 		}
 	}
