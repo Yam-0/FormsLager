@@ -30,7 +30,7 @@
         {
 			this.Varor = new System.Windows.Forms.ListView();
 			this.AddButton = new System.Windows.Forms.Button();
-			this.RemoveButton = new System.Windows.Forms.Button();
+			this.CopyButton = new System.Windows.Forms.Button();
 			this.ItemLabel = new System.Windows.Forms.Label();
 			this.NameBox = new System.Windows.Forms.TextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -39,7 +39,6 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.ClearButton = new System.Windows.Forms.Button();
 			this.ApplyButton = new System.Windows.Forms.Button();
-			this.FindButton = new System.Windows.Forms.Button();
 			this.PriceLabel = new System.Windows.Forms.Label();
 			this.BrowseButton = new System.Windows.Forms.Button();
 			this.CountLabel = new System.Windows.Forms.Label();
@@ -50,6 +49,7 @@
 			this.CloseButton = new System.Windows.Forms.Button();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.ReloadButton = new System.Windows.Forms.Button();
+			this.RemoveButton = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -84,16 +84,16 @@
 			this.AddButton.UseVisualStyleBackColor = true;
 			this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
 			// 
-			// RemoveButton
+			// CopyButton
 			// 
-			this.RemoveButton.Location = new System.Drawing.Point(69, 418);
-			this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
-			this.RemoveButton.Name = "RemoveButton";
-			this.RemoveButton.Size = new System.Drawing.Size(56, 27);
-			this.RemoveButton.TabIndex = 3;
-			this.RemoveButton.Text = "Remove";
-			this.RemoveButton.UseVisualStyleBackColor = true;
-			this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+			this.CopyButton.Location = new System.Drawing.Point(69, 418);
+			this.CopyButton.Margin = new System.Windows.Forms.Padding(2);
+			this.CopyButton.Name = "CopyButton";
+			this.CopyButton.Size = new System.Drawing.Size(56, 27);
+			this.CopyButton.TabIndex = 3;
+			this.CopyButton.Text = "Copy";
+			this.CopyButton.UseVisualStyleBackColor = true;
+			this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
 			// 
 			// ItemLabel
 			// 
@@ -141,7 +141,7 @@
 			this.ErrorBox.Name = "ErrorBox";
 			this.ErrorBox.ReadOnly = true;
 			this.ErrorBox.Size = new System.Drawing.Size(221, 107);
-			this.ErrorBox.TabIndex = 8;
+			this.ErrorBox.TabIndex = 9;
 			this.ErrorBox.Text = "";
 			// 
 			// panel2
@@ -151,7 +151,6 @@
 			this.panel2.Controls.Add(this.NameBox);
 			this.panel2.Controls.Add(this.ClearButton);
 			this.panel2.Controls.Add(this.ApplyButton);
-			this.panel2.Controls.Add(this.FindButton);
 			this.panel2.Controls.Add(this.PriceLabel);
 			this.panel2.Controls.Add(this.BrowseButton);
 			this.panel2.Controls.Add(this.CountLabel);
@@ -169,6 +168,8 @@
 			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBox1.Image = global::Lager.Properties.Resources.Ping;
 			this.pictureBox1.Location = new System.Drawing.Point(3, 107);
+			this.pictureBox1.MaximumSize = new System.Drawing.Size(118, 118);
+			this.pictureBox1.MinimumSize = new System.Drawing.Size(118, 118);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(118, 118);
 			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -178,11 +179,11 @@
 			// 
 			// ClearButton
 			// 
-			this.ClearButton.Location = new System.Drawing.Point(126, 198);
+			this.ClearButton.Location = new System.Drawing.Point(127, 138);
 			this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ClearButton.Name = "ClearButton";
 			this.ClearButton.Size = new System.Drawing.Size(89, 27);
-			this.ClearButton.TabIndex = 9;
+			this.ClearButton.TabIndex = 7;
 			this.ClearButton.Text = "Clear";
 			this.ClearButton.UseVisualStyleBackColor = true;
 			this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
@@ -190,27 +191,15 @@
 			// 
 			// ApplyButton
 			// 
-			this.ApplyButton.Location = new System.Drawing.Point(126, 107);
+			this.ApplyButton.Location = new System.Drawing.Point(126, 198);
 			this.ApplyButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ApplyButton.Name = "ApplyButton";
 			this.ApplyButton.Size = new System.Drawing.Size(89, 27);
-			this.ApplyButton.TabIndex = 6;
+			this.ApplyButton.TabIndex = 8;
 			this.ApplyButton.Text = "Apply";
 			this.ApplyButton.UseVisualStyleBackColor = true;
 			this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
 			this.ApplyButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Button_KeyDown);
-			// 
-			// FindButton
-			// 
-			this.FindButton.Location = new System.Drawing.Point(126, 167);
-			this.FindButton.Margin = new System.Windows.Forms.Padding(2);
-			this.FindButton.Name = "FindButton";
-			this.FindButton.Size = new System.Drawing.Size(89, 27);
-			this.FindButton.TabIndex = 8;
-			this.FindButton.Text = "Find";
-			this.FindButton.UseVisualStyleBackColor = true;
-			this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
-			this.FindButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Button_KeyDown);
 			// 
 			// PriceLabel
 			// 
@@ -225,12 +214,12 @@
 			// 
 			// BrowseButton
 			// 
-			this.BrowseButton.Location = new System.Drawing.Point(126, 137);
+			this.BrowseButton.Location = new System.Drawing.Point(126, 107);
 			this.BrowseButton.Margin = new System.Windows.Forms.Padding(2);
 			this.BrowseButton.Name = "BrowseButton";
 			this.BrowseButton.Size = new System.Drawing.Size(89, 27);
-			this.BrowseButton.TabIndex = 7;
-			this.BrowseButton.Text = "Add";
+			this.BrowseButton.TabIndex = 6;
+			this.BrowseButton.Text = "Browse";
 			this.BrowseButton.UseVisualStyleBackColor = true;
 			this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
 			this.BrowseButton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Button_KeyDown);
@@ -307,14 +296,25 @@
 			// 
 			// ReloadButton
 			// 
-			this.ReloadButton.Location = new System.Drawing.Point(177, 418);
+			this.ReloadButton.Location = new System.Drawing.Point(290, 418);
 			this.ReloadButton.Margin = new System.Windows.Forms.Padding(2);
 			this.ReloadButton.Name = "ReloadButton";
 			this.ReloadButton.Size = new System.Drawing.Size(56, 27);
-			this.ReloadButton.TabIndex = 4;
+			this.ReloadButton.TabIndex = 10;
 			this.ReloadButton.Text = "Reload";
 			this.ReloadButton.UseVisualStyleBackColor = true;
 			this.ReloadButton.Click += new System.EventHandler(this.ReloadButton_Click);
+			// 
+			// RemoveButton
+			// 
+			this.RemoveButton.Location = new System.Drawing.Point(177, 418);
+			this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
+			this.RemoveButton.Name = "RemoveButton";
+			this.RemoveButton.Size = new System.Drawing.Size(56, 27);
+			this.RemoveButton.TabIndex = 4;
+			this.RemoveButton.Text = "Remove";
+			this.RemoveButton.UseVisualStyleBackColor = true;
+			this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
 			// 
 			// Lager
 			// 
@@ -327,6 +327,7 @@
 			this.Controls.Add(this.CloseButton);
 			this.Controls.Add(this.SaveButton);
 			this.Controls.Add(this.RemoveButton);
+			this.Controls.Add(this.CopyButton);
 			this.Controls.Add(this.AddButton);
 			this.Controls.Add(this.Varor);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -348,7 +349,7 @@
         #endregion
 
         private System.Windows.Forms.ListView Varor;
-        private System.Windows.Forms.Button RemoveButton;
+        private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.Label ItemLabel;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.TextBox NameBox;
@@ -367,8 +368,8 @@
 		private System.Windows.Forms.Button ClearButton;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Button ApplyButton;
-		private System.Windows.Forms.Button FindButton;
 		private System.Windows.Forms.Button ReloadButton;
+		private System.Windows.Forms.Button RemoveButton;
 	}
 }
 

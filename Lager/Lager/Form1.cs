@@ -334,27 +334,6 @@ namespace Lager
 			}
 		}
 
-		private void FindButton_Click(object sender, EventArgs e)
-		{
-			if (Varor.SelectedItems.Count > 0)
-			{
-				string adress = System.IO.Directory.GetCurrentDirectory() + @"\" + "ImageList";
-				openFileDialog1.InitialDirectory = adress;
-				openFileDialog1.Filter = "*.png;)|*.png;";
-				openFileDialog1.RestoreDirectory = true;
-
-				if (openFileDialog1.ShowDialog() == DialogResult.OK && Varor.SelectedItems.Count > 0)
-				{
-					var item = Varor.SelectedItems[0];
-					Image image = Image.FromFile(openFileDialog1.FileName);
-					pictureBox1.Image = image;
-					Bitmap bmp = (Bitmap)image;
-					string newAdress = openFileDialog1.FileName;
-					Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
-				}
-			}
-		}
-
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
 			Console.WriteLine("Saving");
@@ -420,7 +399,7 @@ namespace Lager
 								}
 								else
 								{
-									ClearButton.Focus();
+									ApplyButton.Focus();
 								}
 							}
 							else
@@ -431,7 +410,7 @@ namespace Lager
 								}
 								else
 								{
-									ApplyButton.Focus();
+									BrowseButton.Focus();
 								}
 							}
 							break;
@@ -530,6 +509,30 @@ namespace Lager
 					Varor.Items.Add(item);
 				}
 			}
+		}
+
+		private void CopyButton_Click(object sender, EventArgs e)
+		{
+			var name = Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text;
+			var count = Varor.Items[Varor.SelectedItems[0].Index].SubItems[1].Text;
+			var price = Varor.Items[Varor.SelectedItems[0].Index].SubItems[2].Text;
+			var adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
+
+			ListViewItem item = new ListViewItem(name, 0);
+
+			item.SubItems.Add(count);
+			item.SubItems.Add(price);
+			item.SubItems.Add(adress);
+			Varor.Items.Add(item);
+
+			foreach (ListViewItem selectedItem in Varor.SelectedItems)
+			{
+				selectedItem.Selected = false;
+			}
+
+			Varor.Items[item.Index].Selected = true;
+			Varor.Select();
+			UpdateSelection();
 		}
 	}
 }
