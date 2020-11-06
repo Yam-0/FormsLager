@@ -31,7 +31,7 @@ namespace Lager
 
 		public void CreateMyListView()
 		{
-			int itemCount = 20;
+			int itemCount = 10;
 
 			ListViewItem[] items = new ListViewItem[itemCount];
 
@@ -261,16 +261,16 @@ namespace Lager
 			Application.Exit();
 		}
 
-		private void ClearButton1_Click(object sender, EventArgs e)
+		private void ClearButton_Click(object sender, EventArgs e)
 		{
-			NameBox.Text = "";
-			CountBox.Text = "";
-			PriceBox.Text = "";
-		}
+            NameBox.Text = "";
+            CountBox.Text = "";
+            PriceBox.Text = "";
+            ErrorBox.Text = "";
+            Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = "-";
+            Bitmap Placeholder = Properties.Resources.Ping;
 
-		private void ClearButton2_Click(object sender, EventArgs e)
-		{
-			if(Varor.SelectedItems.Count > 0)
+            if (Varor.SelectedItems.Count > 0)
 			{
 				var item = Varor.SelectedItems[0];
 
@@ -278,7 +278,6 @@ namespace Lager
 				string adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
 				if (File.Exists(adress))
 				{
-					Bitmap Placeholder = Properties.Resources.Ping;
 					pictureBox1.Image = Placeholder;
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
@@ -322,7 +321,6 @@ namespace Lager
 					pictureBox1.Image = image;
 					Bitmap bmp = (Bitmap)image;
 					string newAdress = openFileDialog1.FileName;
-					ErrorBox.Text = newAdress;
 					Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text = newAdress;
 				}
 			}
@@ -372,7 +370,6 @@ namespace Lager
 					e.SuppressKeyPress = true;
 					break;
 
-				case Keys.Left:
 				case Keys.Escape:
 					Varor.Select();
 					if(Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
@@ -387,21 +384,62 @@ namespace Lager
 						{
 							if(e.KeyCode == Keys.Up)
 							{
-								if(i != 0) { textBoxes[i - 1].Focus(); }
+								if(i != 0)
+                                {
+                                    textBoxes[i - 1].Focus();
+                                }
+                                else
+                                {
+                                    ClearButton.Focus();
+                                }
 							}
 							else
 							{
-								if (i != 2) { textBoxes[i + 1].Focus(); }
+                                if (i != 2)
+                                {
+                                    textBoxes[i + 1].Focus();
+                                }
+                                else
+                                {
+                                    ApplyButton.Focus();
+                                }
 							}
 							break;
 						}
 					}
 					break;
-
 			}
-
-			e.Handled = true;
 		}
-	}
+
+        private void Button_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    Varor.Select();
+                    if (Varor.Items.Count > 0 && Varor.SelectedItems.Count <= 0) { Varor.Items[0].Selected = true; }
+                    e.SuppressKeyPress = true;
+                    break;
+            }
+
+            e.Handled = true;
+        }
+
+        private void Box_Enter(object sender, EventArgs e)
+        {
+            if(NameBox.Focused)
+            {
+                NameBox.SelectAll();
+            }
+            if (CountBox.Focused)
+            {
+                CountBox.SelectAll();
+            }
+            if (PriceBox.Focused)
+            {
+                PriceBox.SelectAll();
+            }
+        }
+    }
 }
 
