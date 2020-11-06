@@ -24,7 +24,6 @@ namespace Lager
 		public Lager()
 		{
 			InitializeComponent();
-			CreateMyListView();
 			ItemLabel.Text = "Item: ";
 			ErrorBox.Text = "";
 			textBoxes = new TextBox[] { NameBox, CountBox, PriceBox };
@@ -40,7 +39,14 @@ namespace Lager
 				Console.WriteLine(database);
 			}
 
-			database = databaseClient.GetDatabase("Varor-Database");
+			string databaseName = "Varor-Database";
+			database = databaseClient.GetDatabase(databaseName);
+			var command = new BsonDocument { { "dbstats", 1 } };
+			var result = database.RunCommand<BsonDocument>(command);
+
+			Console.WriteLine(result);
+
+			CreateMyListView();
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -54,25 +60,22 @@ namespace Lager
 			Varor.MultiSelect = true;
 			Varor.View = View.Details;
 
-			/*
-			int itemCount = 10;
-
-			ListViewItem[] items = new ListViewItem[itemCount];
-
-			Random random = new Random();
-			for (int i = 0; i < items.Length; i++)
+			var dbVaror = database.GetCollection<BsonDocument>("Varor");
+			var documents = dbVaror.Find(new BsonDocument()).ToList();
+			foreach (BsonDocument vara in documents)
 			{
-				ListViewItem item = new ListViewItem("Item" + i, 0);
-				string price = random.Next(0, 100).ToString();
-				string count = random.Next(0, 1000).ToString();
-				string adress = "-";
+				string name = vara.GetValue(1).ToString();
+				string price = vara.GetValue(2).ToString();
+				string count = vara.GetValue(3).ToString();
+				string adress = vara.GetValue(4).ToString();
+
+				ListViewItem item = new ListViewItem(name, 0);
 				item.SubItems.Add(count);
 				item.SubItems.Add(price);
 				item.SubItems.Add(adress);
 
 				Varor.Items.Add(item);
 			}
-			*/
 
 			Varor.Sorting = SortOrder.Ascending;
 
@@ -349,7 +352,8 @@ namespace Lager
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-
+			Console.WriteLine("Saving");
+			SetDatabase();
 		}
 
 		private void Varor_KeyDown(object sender, KeyEventArgs e)
@@ -460,6 +464,38 @@ namespace Lager
 			{
 				PriceBox.SelectAll();
 			}
+		}
+
+		public void SetDatabase()
+		{
+			var dbVaror = database.GetCollection<BsonDocument>("Varor");
+			var documents = dbVaror.Find(new BsonDocument()).ToList();
+			foreach (BsonDocument vara in documents)
+			{
+				dbVaror.DeleteOne(vara);
+			}
+
+			List<BsonDocument> varor = new List<BsonDocument>();
+
+			foreach (ListViewItem item in Varor.Items)
+			{
+				string name = item.SubItems[0].Text;
+				string count = item.SubItems[1].Text;
+				string price = item.SubItems[2].Text;
+				string adress = item.SubItems[3].Text;
+
+				var vara = new BsonDocument
+				{
+					{"name", name},
+					{"count", count},
+					{"price", price},
+					{"adress", adress}
+				};
+
+				varor.Add(vara);
+			}
+
+			dbVaror.InsertMany(varor);
 		}
 	}
 }
