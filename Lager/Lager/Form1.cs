@@ -336,8 +336,11 @@ namespace Lager
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-			Console.WriteLine("Saving");
-			SetDatabase();
+			var confirmResult = MessageBox.Show("Are you sure you wan't to overwrite database?", "Overwrite", MessageBoxButtons.YesNo);
+			if (confirmResult == DialogResult.Yes)
+			{
+				SetDatabase();
+			}
 		}
 
 		private void Varor_KeyDown(object sender, KeyEventArgs e)
