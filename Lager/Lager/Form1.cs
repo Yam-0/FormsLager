@@ -24,6 +24,7 @@ namespace Lager
 		public Lager()
 		{
 			InitializeComponent();
+
 			ItemLabel.Text = "Item: ";
 			ErrorBox.Text = "";
 			textBoxes = new TextBox[] { NameBox, CountBox, PriceBox };
@@ -37,15 +38,22 @@ namespace Lager
 			{
 				Console.WriteLine(database);
 			}
-
 			string databaseName = "Varor-Database";
 			database = databaseClient.GetDatabase(databaseName);
 			var command = new BsonDocument { { "dbstats", 1 } };
 			var result = database.RunCommand<BsonDocument>(command);
-
 			Console.WriteLine(result);
 
 			CreateMyListView();
+
+			/*
+			var dbVaror = database.GetCollection<BsonDocument>("Varor");
+			var filter = Builders<BsonDocument>.Filter.Eq("name", "Yes");
+			var document = dbVaror.Find(filter).FirstOrDefault();
+			ErrorBox.Text = document.GetValue(2).ToString();
+			document.Set(2, "No");
+			dbVaror.ReplaceOne(filter, document);
+			*/
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -283,7 +291,7 @@ namespace Lager
 
 		private void CloseButton_Click(object sender, EventArgs e)
 		{
-			var confirmResult = MessageBox.Show("Are you sure you wan't to quit without saving?", "Quit without saving", MessageBoxButtons.YesNo);
+			var confirmResult = MessageBox.Show("Are you sure you want to quit without saving?", "Quit without saving", MessageBoxButtons.YesNo);
 			if (confirmResult == DialogResult.Yes)
 			{
 				Application.Exit();
@@ -336,7 +344,7 @@ namespace Lager
 
 		private void SaveButton_Click(object sender, EventArgs e)
 		{
-			var confirmResult = MessageBox.Show("Are you sure you wan't to overwrite database?", "Overwrite", MessageBoxButtons.YesNo);
+			var confirmResult = MessageBox.Show("Are you sure you want to overwrite database?", "Overwrite", MessageBoxButtons.YesNo);
 			if (confirmResult == DialogResult.Yes)
 			{
 				SetDatabase();
@@ -487,7 +495,7 @@ namespace Lager
 
 		private void ReloadButton_Click(object sender, EventArgs e)
 		{
-			var confirmResult = MessageBox.Show("Are you sure you wan't to discard all changes and reload from database?", "Discard Changes", MessageBoxButtons.YesNo);
+			var confirmResult = MessageBox.Show("Are you sure you want to discard all changes and reload from database?", "Discard Changes", MessageBoxButtons.YesNo);
 			if (confirmResult == DialogResult.Yes)
 			{
 				foreach (ListViewItem item in Varor.Items)
@@ -536,6 +544,11 @@ namespace Lager
 			Varor.Items[item.Index].Selected = true;
 			Varor.Select();
 			UpdateSelection();
+		}
+
+		private void ErrorBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			e.SuppressKeyPress = true;
 		}
 	}
 }
