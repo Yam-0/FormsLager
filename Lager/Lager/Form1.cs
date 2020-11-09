@@ -524,7 +524,12 @@ namespace Lager
 
 		private void CopyButton_Click(object sender, EventArgs e)
 		{
-			var name = Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text;
+            if (Varor.SelectedItems.Count <= 0)
+            {
+                return;
+            }
+
+            var name = Varor.Items[Varor.SelectedItems[0].Index].SubItems[0].Text;
 			var count = Varor.Items[Varor.SelectedItems[0].Index].SubItems[1].Text;
 			var price = Varor.Items[Varor.SelectedItems[0].Index].SubItems[2].Text;
 			var adress = Varor.Items[Varor.SelectedItems[0].Index].SubItems[3].Text;
